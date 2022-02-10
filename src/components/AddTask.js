@@ -18,10 +18,10 @@ function AddTask(props) {
   }
 
   return (
-    <form>
-      <input onChange={handleChange} className='form-task_title' name='taskTitle' />
-      <input onChange={handleChange} className='form-task_details' name='taskDetails' />
-      <button className='form-add_button' onClick={handleSaveTask} >Add Task</button>
+    <form className='AddTaskForm'>
+      <input onChange={handleChange} placeholder="Title" className='AddTaskForm-taskTitle' name='taskTitle' />
+      <input onChange={handleChange} placeholder="Details" className='AddTaskForm-taskDetails' name='taskDetails' />
+      <button className='AddTaskForm-addButton' onClick={handleSaveTask} >Add Task</button>
     </form>
   );
 }
