@@ -12,3 +12,12 @@
   font-size: calc(10px + 4vmin);
   color: white;
 }
+
+.Task {
+    background-color: #282c34;
+    flex-direction: column;
+    margin: 15px;
+    color: white;
+    padding: 1px 25px 1px;
+    border-radius: 15px;
+}

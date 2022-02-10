@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import AddTask from './components/AddTask';
 import { useState, useEffect } from 'react';
+import Task from './components/Task';
+import uniqid from 'uniqid';
 
 function App() {
   const TASKS_KEY = "TASK_KEY"
@@ -37,6 +39,7 @@ function App() {
       setTasks(oldTasks => {
         return [...oldTasks,
         {
+          id: uniqid(),
           title: title,
           details: details
         }
@@ -44,6 +47,10 @@ function App() {
       })
     }
   }
+
+  const taskElements = tasks.map(task => {
+    return <Task key={task.id} task={task} />
+  })
 
   return (
     <div className="App">
@@ -55,6 +62,7 @@ function App() {
       </header>
       <main>
         <AddTask saveTask={saveTask} />
+        {taskElements}
       </main>
     </div>
   );
