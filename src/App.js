@@ -41,15 +41,22 @@ function App() {
         {
           id: uniqid(),
           title: title,
-          details: details
+          details: details,
+          isDone: false
         }
         ]
       })
     }
   }
 
+  function toggleIsDone(taskId) {
+    setTasks(oldTasks => {
+      return oldTasks.map(task => task.id === taskId ? { ...task, isDone: !task.isDone } : task)
+    })
+  }
+
   const taskElements = tasks.map(task => {
-    return <Task key={task.id} task={task} />
+    return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} />
   })
 
   return (

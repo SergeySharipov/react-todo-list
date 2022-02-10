@@ -15,11 +15,26 @@
 
 .Task {
     background-color: #282c34;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin: 15px;
     color: white;
     padding: 5px 25px 5px;
     border-radius: 15px;
+}
+
+.Task-checkbox {
+    transform: scale(2);
+}
+
+.Task-textContent {
+    margin: 10px;
+    flex-direction: column;
+}
+
+.Task-title, .Task-details {
+    margin: 10px;
 }
 
 .AddTaskForm {
