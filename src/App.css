@@ -44,27 +44,35 @@
     flex-flow: wrap;
     margin: 15px;
     color: white;
-    padding: 1px 25px 1px;
+    padding: 1px 10px 1px;
     border-radius: 15px;
+}
+
+.AddTaskForm-column {
+    display: flex;
+    flex-grow: 4;
+    margin: 15px 5px 15px 5px;
+    flex-direction: column;
 }
 
 .AddTaskForm-taskTitle {
     flex-grow: 4;
-    margin: 15px 15px 15px 0px;
     font-size: large;
 }
 
 .AddTaskForm-taskDetails {
     flex-grow: 4;
-    margin: 15px 15px 15px 0px;
     font-size: large;
 }
 
 .AddTaskForm-addButton {
     flex-grow: 1;
-    margin: 15px 15px 15px 0px;
     background-color: #383e4b;
     color: #fff;
     padding: 10px;
     font-size: large;
+}
+
+.FormError {
+    color: rgb(255, 0, 0);
 }
