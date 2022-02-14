@@ -13,6 +13,40 @@
     color: white;
 }
 
+.row {
+    display: flex;
+}
+
+.CategoriesColumn {
+    flex: 30%;
+}
+
+.TasksColumn {
+    flex: 70%;
+}
+
+.AddCategory {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 15px;
+    color: white;
+    padding: 5px 25px 5px;
+    border-radius: 15px;
+}
+
+.Category {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 15px;
+    color: white;
+    padding: 5px 25px 5px;
+    border-radius: 15px;
+}
+
 .Task {
     background-color: #282c34;
     display: flex;
