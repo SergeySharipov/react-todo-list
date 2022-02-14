@@ -1,0 +1,69 @@
+.Category {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.Category:hover {
+    background-color: #e9ecef;
+}
+
+.Category-title{
+    margin: 15px;
+    margin-right: auto;
+}
+
+.Category-actions {
+    display: flex;
+    flex-direction: row;
+}
+
+.Category-editButton {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-color: #4CAF50;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.Category-editButton:hover {
+    background-color: white;
+    color: white;
+}
+
+.Category-editButton img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20px;
+    height: 20px;
+}
+
+.Category-deleteButton {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-color: #ff5959;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.Category-deleteButton:hover {
+    background-color: white;
+    color: white;
+}
+
+.Category-deleteButton img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20px;
+    height: 20px;
+}

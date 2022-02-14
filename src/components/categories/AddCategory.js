@@ -1,4 +1,6 @@
-function Categories({ saveCategory }) {
+import './AddCategory.css';
+
+function AddCategory({ saveCategory }) {
 
     function isBlank(str) {
         return (!str || /^\s*$/.test(str));
@@ -15,9 +17,9 @@ function Categories({ saveCategory }) {
 
     return (
         <div className='AddCategory'>
-            <button onClick={handleCreateNewList} >Create new list</button>
+            <button className='AddCategory-addButton' onClick={handleCreateNewList} >Create new list</button>
         </div>
     );
 }
 
-export default Categories;
+export default AddCategory;

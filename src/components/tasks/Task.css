@@ -1,0 +1,79 @@
+.Task {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
+    padding: 0px 15px 0px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.Task:hover {
+    background-color: #e9ecef;
+}
+
+.Task-checkbox {
+    transform: scale(2);
+}
+
+.Task-textContent {
+    margin: 10px;
+    margin-right: auto;
+    flex-direction: column;
+}
+
+.Task-title, .Task-details {
+    margin: 10px;
+}
+
+.Task-actions {
+    display: flex;
+    flex-direction: row;
+}
+
+.Task-editButton {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-color: #4CAF50;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.Task-editButton:hover {
+    background-color: white;
+    color: white;
+}
+
+.Task-editButton img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20px;
+    height: 20px;
+}
+
+.Task-deleteButton {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-color: #ff5959;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.Task-deleteButton:hover {
+    background-color: white;
+    color: white;
+}
+
+.Task-deleteButton img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20px;
+    height: 20px;
+}

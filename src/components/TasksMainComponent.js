@@ -1,7 +1,7 @@
-import '../App.css';
-import AddTask from './AddTask';
+import './TasksMainComponent.css';
+import AddTask from './tasks/AddTask';
 import { useState, useEffect } from 'react';
-import Task from './Task';
+import Task from './tasks/Task';
 import uniqid from 'uniqid';
 
 function TasksMainComponent() {
@@ -61,7 +61,7 @@ function TasksMainComponent() {
     })
 
     return (
-        <div class="TasksColumn">
+        <div class="TasksGroup">
             <AddTask saveTask={saveTask} />
             {taskElements}
         </div>

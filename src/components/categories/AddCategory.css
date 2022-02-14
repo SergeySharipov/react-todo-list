@@ -1,0 +1,25 @@
+.AddCategory {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
+    padding: 0px 15px 0px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.AddCategory-addButton {
+    flex-grow: 4;
+    font-size: large;
+    margin: 15px;
+    padding: 5px 25px 5px;
+    border-color: #4CAF50;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.AddCategory-addButton:hover {
+    background-color: #4CAF50;
+    color: white;
+  }

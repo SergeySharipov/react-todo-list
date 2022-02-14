@@ -1,12 +1,19 @@
-import '../App.css';
+import './CategoriesMainComponent.css';
 import { useState, useEffect } from 'react';
 import uniqid from 'uniqid';
-import AddCategory from './AddCategory';
-import Category from './Category';
+import AddCategory from './categories/AddCategory';
+import Category from './categories/Category';
 
-function CategoriesMainComponent() {
+
+function CategoriesMainComponent({ selectCategory }) {
     const CATEGORIES_KEY = "CATEGORIES_KEY"
     const [categories, setCategories] = useState([])
+    const permanentCategories = [
+        {
+            id: 0,
+            title: "All"
+        }
+    ]
 
     /* Load local data */
     useEffect(() => {
@@ -18,11 +25,11 @@ function CategoriesMainComponent() {
                 /* Add default categories */
                 const defaultCategories = [
                     {
-                        id: 0,
+                        id: 100,
                         title: "Daily tasks"
                     },
                     {
-                        id: 1,
+                        id: 101,
                         title: "Shopping"
                     }
                 ]
@@ -60,16 +67,21 @@ function CategoriesMainComponent() {
         }
     }
 
+    const permanentCategoryElements = permanentCategories.map(category => {
+        return <Category key={category.id} title={category.title} selectCategory={() => selectCategory(category)} editable={false} />
+    })
     const categoryElements = categories.map(category => {
-        return <Category key={category.id} title={category.title} />
+        return <Category key={category.id} title={category.title} selectCategory={() => selectCategory(category)} />
     })
 
     return (
-        <div class="CategoriesColumn">
+        <div class="CategoriesGroup">
             <AddCategory saveCategory={saveCategory} />
-            {categoryElements}
+                {permanentCategoryElements}
+                {categoryElements}
         </div>
     );
 }
 
 export default CategoriesMainComponent;
+

@@ -1,0 +1,42 @@
+.AddTaskForm {
+    display: block;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
+    padding: 0px 15px 0px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.AddTaskForm-column {
+    display: flex;
+    flex-grow: 4;
+    margin: 15px 5px 15px 5px;
+    flex-direction: column;
+}
+
+.AddTaskForm-taskTitle {
+    flex-grow: 4;
+    font-size: large;
+}
+
+.AddTaskForm-taskDetails {
+    flex-grow: 4;
+    font-size: large;
+}
+
+.AddTaskForm-addButton {
+    flex-grow: 4;
+    font-size: large;
+    margin: 15px;
+    padding: 5px 25px 5px;
+    border-color: #4CAF50;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.AddTaskForm-addButton:hover {
+    background-color: #4CAF50;
+    color: white;
+  }

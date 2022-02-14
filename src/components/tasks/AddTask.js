@@ -1,3 +1,4 @@
+import './AddTask.css';
 import { useState } from 'react';
 
 function AddTask(props) {

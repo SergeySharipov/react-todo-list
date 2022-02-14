@@ -12,11 +12,13 @@ function App() {
           ToDo List
         </p>
       </header>
-      <main>
-        <div class="row">
-          <CategoriesMainComponent />
-          <TasksMainComponent />
-        </div>
+      <main class="App-MainContainer">
+          <div class="App-CategoriesColumn">
+            <CategoriesMainComponent />
+          </div>
+          <div class="App-TasksColumn">
+            <TasksMainComponent />
+          </div>
       </main>
     </div>
   );
