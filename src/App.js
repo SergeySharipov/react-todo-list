@@ -5,7 +5,10 @@ import TasksMainComponent from './components/TasksMainComponent';
 import { useState } from "react";
 
 function App() {
-  const [selectedCategory, setSelectedCategory] = useState("all")
+  const [selectedCategory, setSelectedCategory] = useState({
+    id: "0",
+    title: "All"
+  })
 
   function selectCategory(category) {
     setSelectedCategory(category)
@@ -22,7 +25,7 @@ function App() {
       </header>
       <main className="App-MainContainer">
         <div className="App-CategoriesColumn">
-          <CategoriesMainComponent selectCategory={selectCategory} />
+          <CategoriesMainComponent selectCategory={selectCategory}  selectedCategory={selectedCategory}/>
         </div>
         <div className="App-TasksColumn">
           <TasksMainComponent selectedCategory={selectedCategory} />

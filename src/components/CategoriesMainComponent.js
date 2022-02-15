@@ -5,7 +5,7 @@ import AddCategory from './categories/AddCategory';
 import Category from './categories/Category';
 
 
-function CategoriesMainComponent({ selectCategory }) {
+function CategoriesMainComponent({ selectCategory,  selectedCategory }) {
     const CATEGORIES_KEY = "CATEGORIES_KEY"
     const [categories, setCategories] = useState([])
     const permanentCategories = [
@@ -69,10 +69,12 @@ function CategoriesMainComponent({ selectCategory }) {
     }
 
     const permanentCategoryElements = permanentCategories.map(category => {
-        return <Category key={category.id} title={category.title} selectCategory={() => selectCategory(category)} editable={false} />
+        return <Category key={category.id} category={category} selectedCategory={selectedCategory}
+         selectCategory={() => selectCategory(category)} editable={false} />
     })
     const categoryElements = categories.map(category => {
-        return <Category key={category.id} title={category.title} selectCategory={() => selectCategory(category)} />
+        return <Category key={category.id} category={category} selectedCategory={selectedCategory}
+         selectCategory={() => selectCategory(category)} />
     })
 
     return (

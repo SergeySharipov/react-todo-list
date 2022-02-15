@@ -2,7 +2,10 @@ import './AddTask.css';
 import { useState } from 'react';
 
 function AddTask(props) {
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({
+    taskTitle: "",
+    taskDetails: ""
+  })
 
   function handleChange(event) {
     setFormData(oldFormData => {

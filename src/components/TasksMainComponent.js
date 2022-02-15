@@ -41,6 +41,7 @@ function TasksMainComponent({ selectedCategory }) {
                 return [...oldTasks,
                 {
                     id: uniqid(),
+                    category_id: selectedCategory.id,
                     title: title,
                     details: details,
                     isDone: false
@@ -56,7 +57,7 @@ function TasksMainComponent({ selectedCategory }) {
         })
     }
 
-    const taskElements = tasks.map(task => {
+    const taskElements = tasks.filter(task => task.category_id === selectedCategory.id).map(task => {
         return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} />
     })
 
