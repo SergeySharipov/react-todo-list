@@ -5,7 +5,7 @@ import AddCategory from './categories/AddCategory';
 import Category from './categories/Category';
 
 
-function CategoriesMainComponent({ selectCategory,  selectedCategory }) {
+function CategoriesMainComponent({ selectCategory, selectedCategory }) {
     const CATEGORIES_KEY = "CATEGORIES_KEY"
     const [categories, setCategories] = useState([])
     const permanentCategories = [
@@ -68,20 +68,29 @@ function CategoriesMainComponent({ selectCategory,  selectedCategory }) {
         }
     }
 
+    function removeCategory(id) {
+        if (!isBlank(id)) {
+            if (selectedCategory.id === id) {
+                selectCategory(permanentCategories[0])
+            }
+            setCategories(oldCategories => oldCategories.filter(category => category.id !== id))
+        }
+    }
+
     const permanentCategoryElements = permanentCategories.map(category => {
         return <Category key={category.id} category={category} selectedCategory={selectedCategory}
-         selectCategory={() => selectCategory(category)} editable={false} />
+            selectCategory={() => selectCategory(category)} editable={false} />
     })
     const categoryElements = categories.map(category => {
         return <Category key={category.id} category={category} selectedCategory={selectedCategory}
-         selectCategory={() => selectCategory(category)} />
+            selectCategory={() => selectCategory(category)} removeCategory={() => removeCategory(category.id)} />
     })
 
     return (
         <div className="CategoriesMainComponent">
             <AddCategory saveCategory={saveCategory} />
-                {permanentCategoryElements}
-                {categoryElements}
+            {permanentCategoryElements}
+            {categoryElements}
         </div>
     );
 }
