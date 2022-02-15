@@ -57,8 +57,14 @@ function TasksMainComponent({ selectedCategory }) {
         })
     }
 
+    function removeTask(id) {
+        if (!isBlank(id)) {
+            setTasks(oldTasks => oldTasks.filter(task => task.id !== id))
+        }
+    }
+
     const taskElements = tasks.filter(task => selectedCategory.id === "0" || task.category_id === selectedCategory.id).map(task => {
-        return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} />
+        return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} removeTask={() => removeTask(task.id)}/>
     })
 
     return (
