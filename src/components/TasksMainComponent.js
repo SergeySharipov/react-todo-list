@@ -3,10 +3,12 @@ import AddTask from './tasks/AddTask';
 import { useState, useEffect } from 'react';
 import Task from './tasks/Task';
 import uniqid from 'uniqid';
+import UpdateTaskDialog from './UpdateTaskDialog';
 
 function TasksMainComponent({ selectedCategory }) {
     const TASKS_KEY = "TASK_KEY"
     const [tasks, setTasks] = useState([])
+    const [updateTaskId, setUpdateTaskId] = useState("");
 
     /* Load local data */
     useEffect(() => {
@@ -51,6 +53,19 @@ function TasksMainComponent({ selectedCategory }) {
         }
     }
 
+    function updateTask(task) {
+        if (!isBlank(task.title)) {
+            setTasks(oldTasks => {
+                return oldTasks.map(oldTask => task.id === oldTask.id ? {
+                    ...oldTask,
+                    category_id: task.categoryId,
+                    title: task.title,
+                    details: task.details
+                } : oldTask)
+            })
+        }
+    }
+
     function toggleIsDone(taskId) {
         setTasks(oldTasks => {
             return oldTasks.map(task => task.id === taskId ? { ...task, isDone: !task.isDone } : task)
@@ -63,8 +78,19 @@ function TasksMainComponent({ selectedCategory }) {
         }
     }
 
+    function openUpdateTaskDialog(id) {
+        setUpdateTaskId(id);
+    }
+
+    function cancelUpdateTaskDialog() {
+        if (updateTaskId !== "") {
+            setUpdateTaskId("")
+        }
+    }
+
     const taskElements = tasks.filter(task => selectedCategory.id === "0" || task.category_id === selectedCategory.id).map(task => {
-        return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} removeTask={() => removeTask(task.id)}/>
+        return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} removeTask={() => removeTask(task.id)}
+            openUpdateTaskDialog={() => openUpdateTaskDialog(task.id)} />
     })
 
     return (
@@ -72,6 +98,11 @@ function TasksMainComponent({ selectedCategory }) {
             <h1 className='TasksMainComponent-title'>{selectedCategory.title}</h1>
             <AddTask saveTask={saveTask} />
             {taskElements}
+            <UpdateTaskDialog
+                task={tasks.find(task => task.id === updateTaskId)}
+                updateTask={updateTask}
+                cancelUpdateTaskDialog={cancelUpdateTaskDialog}
+            />
         </div>
     );
 }

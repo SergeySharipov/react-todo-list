@@ -13,14 +13,14 @@
     flex-direction: row;
     align-items: center;
     margin: 5px;
-    background-color: #d0d2d4;
+    background-color: #fafafa;
     border-color: #d0d2d4;
     border-style: solid;
     border-radius: 15px;
 }
 
 .Category:hover {
-    background-color: #e9ecef;
+    background-color: #fafafa;
 }
 
 .Category-title {

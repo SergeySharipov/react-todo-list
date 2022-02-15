@@ -2,7 +2,7 @@ import './Task.css';
 import ic_edit from "../../images/ic_edit.svg"
 import ic_delete from "../../images/ic_delete.svg"
 
-function Task({ task, toggleIsDone, removeTask }) {
+function Task({ task, toggleIsDone, removeTask, openUpdateTaskDialog }) {
     return (
         <div className='Task'>
             <input className="Task-checkbox" type="checkbox" checked={task.isDone} onChange={toggleIsDone} />
@@ -11,7 +11,7 @@ function Task({ task, toggleIsDone, removeTask }) {
                 <p className='Task-details'>{task.details}</p>
             </div>
             <div className='Task-actions'>
-                <button className="Task-editButton"><img src={ic_edit} alt="Edit" /></button>
+                <button className="Task-editButton" onClick={openUpdateTaskDialog}><img src={ic_edit} alt="Edit" /></button>
                 <button className="Task-deleteButton" onClick={removeTask}><img src={ic_delete} alt="Delete" /></button>
             </div>
         </div>
