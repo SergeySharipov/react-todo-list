@@ -10,7 +10,7 @@ function CategoriesMainComponent({ selectCategory }) {
     const [categories, setCategories] = useState([])
     const permanentCategories = [
         {
-            id: 0,
+            id: "0",
             title: "All"
         }
     ]
@@ -25,16 +25,17 @@ function CategoriesMainComponent({ selectCategory }) {
                 /* Add default categories */
                 const defaultCategories = [
                     {
-                        id: 100,
+                        id: "100",
                         title: "Daily tasks"
                     },
                     {
-                        id: 101,
+                        id: "101",
                         title: "Shopping"
                     }
                 ]
                 setCategories(defaultCategories)
             }
+            selectCategory(permanentCategories[0])
         }
 
         loadCategoriesFromLocalStorage()
@@ -75,7 +76,7 @@ function CategoriesMainComponent({ selectCategory }) {
     })
 
     return (
-        <div class="CategoriesGroup">
+        <div className="CategoriesMainComponent">
             <AddCategory saveCategory={saveCategory} />
                 {permanentCategoryElements}
                 {categoryElements}

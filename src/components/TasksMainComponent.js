@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Task from './tasks/Task';
 import uniqid from 'uniqid';
 
-function TasksMainComponent() {
+function TasksMainComponent({ selectedCategory }) {
     const TASKS_KEY = "TASK_KEY"
     const [tasks, setTasks] = useState([])
 
@@ -61,7 +61,8 @@ function TasksMainComponent() {
     })
 
     return (
-        <div class="TasksGroup">
+        <div className="TasksMainComponent">
+            <h1 className='TasksMainComponent-title'>{selectedCategory.title}</h1>
             <AddTask saveTask={saveTask} />
             {taskElements}
         </div>

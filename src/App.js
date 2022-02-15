@@ -2,8 +2,16 @@ import logo from './logo.svg';
 import './App.css';
 import CategoriesMainComponent from './components/CategoriesMainComponent';
 import TasksMainComponent from './components/TasksMainComponent';
+import { useState } from "react";
 
 function App() {
+  const [selectedCategory, setSelectedCategory] = useState("all")
+
+  function selectCategory(category) {
+    setSelectedCategory(category)
+    console.log(category)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -12,13 +20,13 @@ function App() {
           ToDo List
         </p>
       </header>
-      <main class="App-MainContainer">
-          <div class="App-CategoriesColumn">
-            <CategoriesMainComponent />
-          </div>
-          <div class="App-TasksColumn">
-            <TasksMainComponent />
-          </div>
+      <main className="App-MainContainer">
+        <div className="App-CategoriesColumn">
+          <CategoriesMainComponent selectCategory={selectCategory} />
+        </div>
+        <div className="App-TasksColumn">
+          <TasksMainComponent selectedCategory={selectedCategory} />
+        </div>
       </main>
     </div>
   );

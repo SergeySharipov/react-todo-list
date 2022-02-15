@@ -8,6 +8,17 @@
     border-radius: 15px;
 }
 
+.Category-selected {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
+    background-color: #bec1c4;
+    border-color: #e9ecef;
+    border-style: solid;
+    border-radius: 15px;
+}
+
 .Category:hover {
     background-color: #e9ecef;
 }

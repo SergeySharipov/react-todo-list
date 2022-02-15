@@ -1,5 +1,9 @@
-.TasksGroup {
+.TasksMainComponent {
     padding: 10px;
     display: flex;
     flex-direction: column;
+}
+
+.TasksMainComponent-title {
+    align-self: center;
 }

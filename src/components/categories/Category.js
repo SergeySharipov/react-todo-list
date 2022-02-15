@@ -2,9 +2,9 @@ import './Category.css';
 import ic_edit from "../../images/ic_edit.svg"
 import ic_delete from "../../images/ic_delete.svg"
 
-function Category({ title, editable = true }) {
+function Category({ title,selectCategory, editable = true, selected=false }) {
   return (
-    <div className='Category'>
+    <div className={selected?'Category-selected':'Category'} onClick={selectCategory}>
       <h3 className='Category-title'>{title}</h3>
       {editable && <div className='Category-actions'>
         <button className="Category-editButton"><img src={ic_edit} alt="Edit" /></button>
