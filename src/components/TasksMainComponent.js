@@ -57,7 +57,7 @@ function TasksMainComponent({ selectedCategory }) {
         })
     }
 
-    const taskElements = tasks.filter(task => task.category_id === selectedCategory.id).map(task => {
+    const taskElements = tasks.filter(task => selectedCategory.id === "0" || task.category_id === selectedCategory.id).map(task => {
         return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} />
     })
 
