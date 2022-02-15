@@ -15,7 +15,6 @@ const UpdateTaskDialog = ({ task, updateTask, cancelUpdateTaskDialog }) => {
     }, [task])
 
     const handleForm = (e) => {
-        console.log(formData)
         setFormData({
             ...formData,
             [e.currentTarget.id]: e.currentTarget.value,

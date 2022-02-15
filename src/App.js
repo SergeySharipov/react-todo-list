@@ -5,15 +5,8 @@ import TasksMainComponent from './components/TasksMainComponent';
 import { useState } from "react";
 
 function App() {
-  const [selectedCategory, setSelectedCategory] = useState({
-    id: "0",
-    title: "All"
-  })
-
-  function selectCategory(category) {
-    setSelectedCategory(category)
-    console.log(category)
-  }
+  const [categories, setCategories] = useState([])
+  const [selectedCategoryId, setSelectedCategoryId] = useState("0")
 
   return (
     <div className="App">
@@ -25,10 +18,10 @@ function App() {
       </header>
       <main className="App-MainContainer">
         <div className="App-CategoriesColumn">
-          <CategoriesMainComponent selectCategory={selectCategory}  selectedCategory={selectedCategory}/>
+          <CategoriesMainComponent categories={categories} setCategories={setCategories} setSelectedCategoryId={setSelectedCategoryId} selectedCategoryId={selectedCategoryId} />
         </div>
         <div className="App-TasksColumn">
-          <TasksMainComponent selectedCategory={selectedCategory} />
+          <TasksMainComponent categories={categories} selectedCategoryId={selectedCategoryId} />
         </div>
       </main>
     </div>

@@ -1,17 +1,25 @@
 import './CategoriesMainComponent.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import uniqid from 'uniqid';
 import AddCategory from './categories/AddCategory';
 import Category from './categories/Category';
 
 
-function CategoriesMainComponent({ selectCategory, selectedCategory }) {
+function CategoriesMainComponent({ categories, setCategories, setSelectedCategoryId, selectedCategoryId }) {
     const CATEGORIES_KEY = "CATEGORIES_KEY"
-    const [categories, setCategories] = useState([])
-    const permanentCategories = [
+    const defaultCategories = [
         {
             id: "0",
-            title: "All"
+            title: "All",
+            notEditable: true
+        },
+        {
+            id: "1",
+            title: "Daily tasks"
+        },
+        {
+            id: "2",
+            title: "Shopping"
         }
     ]
 
@@ -23,19 +31,9 @@ function CategoriesMainComponent({ selectCategory, selectedCategory }) {
                 setCategories(savedCategories)
             } else {
                 /* Add default categories */
-                const defaultCategories = [
-                    {
-                        id: "100",
-                        title: "Daily tasks"
-                    },
-                    {
-                        id: "101",
-                        title: "Shopping"
-                    }
-                ]
                 setCategories(defaultCategories)
             }
-            selectCategory(permanentCategories[0])
+            selectCategory(defaultCategories[0].id)
         }
 
         loadCategoriesFromLocalStorage()
@@ -70,30 +68,28 @@ function CategoriesMainComponent({ selectCategory, selectedCategory }) {
 
     function removeCategory(id) {
         if (!isBlank(id)) {
-            if (selectedCategory.id === id) {
-                selectCategory(permanentCategories[0])
+            if (selectedCategoryId === id) {
+                selectCategory(defaultCategories[0].id)
             }
             setCategories(oldCategories => oldCategories.filter(category => category.id !== id))
         }
     }
 
-    const permanentCategoryElements = permanentCategories.map(category => {
-        return <Category key={category.id} category={category} selectedCategory={selectedCategory}
-            selectCategory={() => selectCategory(category)} editable={false} />
-    })
+    function selectCategory(id) {
+        setSelectedCategoryId(id)
+    }
+
     const categoryElements = categories.map(category => {
-        return <Category key={category.id} category={category} selectedCategory={selectedCategory}
-            selectCategory={() => selectCategory(category)} removeCategory={() => removeCategory(category.id)} />
+        return <Category key={category.id} category={category} selectedCategoryId={selectedCategoryId}
+            selectCategory={() => selectCategory(category.id)} removeCategory={() => removeCategory(category.id)} />
     })
 
     return (
         <div className="CategoriesMainComponent">
             <AddCategory saveCategory={saveCategory} />
-            {permanentCategoryElements}
             {categoryElements}
         </div>
     );
 }
 
 export default CategoriesMainComponent;
-

@@ -5,7 +5,7 @@ import Task from './tasks/Task';
 import uniqid from 'uniqid';
 import UpdateTaskDialog from './UpdateTaskDialog';
 
-function TasksMainComponent({ selectedCategory }) {
+function TasksMainComponent({ categories, selectedCategoryId }) {
     const TASKS_KEY = "TASK_KEY"
     const [tasks, setTasks] = useState([])
     const [updateTaskId, setUpdateTaskId] = useState("");
@@ -43,7 +43,7 @@ function TasksMainComponent({ selectedCategory }) {
                 return [...oldTasks,
                 {
                     id: uniqid(),
-                    category_id: selectedCategory.id,
+                    category_id: selectedCategoryId,
                     title: title,
                     details: details,
                     isDone: false
@@ -88,14 +88,16 @@ function TasksMainComponent({ selectedCategory }) {
         }
     }
 
-    const taskElements = tasks.filter(task => selectedCategory.id === "0" || task.category_id === selectedCategory.id).map(task => {
+    const taskElements = tasks.filter(task => selectedCategoryId === "0" || task.category_id === selectedCategoryId).map(task => {
         return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} removeTask={() => removeTask(task.id)}
             openUpdateTaskDialog={() => openUpdateTaskDialog(task.id)} />
     })
 
+    const selectedCategory = categories.find(category => category.id === selectedCategoryId);
+
     return (
         <div className="TasksMainComponent">
-            <h1 className='TasksMainComponent-title'>{selectedCategory.title}</h1>
+            <h1 className='TasksMainComponent-title'>{selectedCategory === undefined ? "" : selectedCategory.title}</h1>
             <AddTask saveTask={saveTask} />
             {taskElements}
             <UpdateTaskDialog
