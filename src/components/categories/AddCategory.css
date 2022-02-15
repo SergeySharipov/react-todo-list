@@ -12,6 +12,7 @@
 .AddCategory-addButton {
     flex-grow: 4;
     font-size: large;
+    background-color: white;
     margin: 15px;
     padding: 5px 25px 5px;
     border-color: #4CAF50;
