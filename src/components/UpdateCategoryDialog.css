@@ -1,0 +1,57 @@
+.UpdateCategoryDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+    outline: none;
+}
+
+.UpdateCategoryDialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.UpdateCategoryDialog-form {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    margin: 5px;
+    padding: 0px 15px 0px;
+    border-color: #e9ecef;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.UpdateCategoryDialog-column {
+    display: flex;
+    flex-grow: 4;
+    margin: 15px 5px 15px 5px;
+    flex-direction: column;
+}
+
+.UpdateCategoryDialog-updateButton {
+    flex-grow: 4;
+    font-size: large;
+    background-color: white;
+    margin: 15px;
+    padding: 5px 25px 5px;
+    border-color: #4CAF50;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.UpdateCategoryDialog-updateButton:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.AddTaskForm-taskTitle {
+    flex-grow: 4;
+    font-size: large;
+}
