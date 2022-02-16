@@ -29,11 +29,20 @@ const AddUpdateTaskDialog = ({ isOpenAddUpdateTaskDialog, task, saveTask, update
             } else {
                 updateTask(formData)
             }
-            cancelAddUpdateTaskDialog()
+            handleCancelAddUpdateTaskDialog()
         } else {
             alert("Title can not be empty!")
         }
     }
+
+    function handleCancelAddUpdateTaskDialog() {
+        setFormData({
+            title: "",
+            description: ""
+        })
+        cancelAddUpdateTaskDialog()
+    }
+
 
     function isBlank(str) {
         return (!str || /^\s*$/.test(str));
@@ -46,7 +55,7 @@ const AddUpdateTaskDialog = ({ isOpenAddUpdateTaskDialog, task, saveTask, update
             isOpen={isOpenAddUpdateTaskDialog}
             contentLabel={label}
             className="AddUpdateTaskDialog"
-            onRequestClose={cancelAddUpdateTaskDialog}
+            onRequestClose={handleCancelAddUpdateTaskDialog}
             overlayClassName="AddUpdateTaskDialog-overlay">
             <form className='AddUpdateTaskDialog-form' onSubmit={handleSubmit}>
                 <div>
