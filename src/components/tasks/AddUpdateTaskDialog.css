@@ -1,4 +1,4 @@
-.UpdateTaskDialog {
+.AddUpdateTaskDialog {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -7,7 +7,7 @@
     outline: none;
 }
 
-.UpdateTaskDialog-overlay {
+.AddUpdateTaskDialog-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -16,7 +16,7 @@
     background-color: rgba(0, 0, 0, 0.75);
 }
 
-.UpdateTaskDialog-form {
+.AddUpdateTaskDialog-form {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -28,14 +28,14 @@
     border-radius: 15px;
 }
 
-.UpdateTaskDialog-column {
+.AddUpdateTaskDialog-column {
     display: flex;
     flex-grow: 4;
     margin: 15px 5px 15px 5px;
     flex-direction: column;
 }
 
-.UpdateTaskDialog-updateButton {
+.AddUpdateTaskDialog-updateButton {
     flex-grow: 4;
     font-size: large;
     background-color: white;
@@ -46,7 +46,7 @@
     border-radius: 15px;
 }
 
-.UpdateTaskDialog-updateButton:hover {
+.AddUpdateTaskDialog-updateButton:hover {
     background-color: #4CAF50;
     color: white;
 }

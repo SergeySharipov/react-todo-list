@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import CategoriesMainComponent from './components/CategoriesMainComponent';
-import TasksMainComponent from './components/TasksMainComponent';
+import CategoriesMainComponent from './components/categories/CategoriesMainComponent';
+import TasksMainComponent from './components/tasks/TasksMainComponent';
 import { useState } from "react";
 
 function App() {

@@ -1,8 +1,8 @@
 import './CategoriesMainComponent.css';
 import { useState, useEffect } from 'react';
 import uniqid from 'uniqid';
-import AddCategory from './categories/AddCategory';
-import Category from './categories/Category';
+import AddCategory from './AddCategory';
+import Category from './Category';
 import UpdateCategoryDialog from './UpdateCategoryDialog';
 
 

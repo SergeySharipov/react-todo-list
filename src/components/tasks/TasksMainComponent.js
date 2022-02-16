@@ -1,14 +1,14 @@
 import './TasksMainComponent.css';
-import AddTask from './tasks/AddTask';
 import { useState, useEffect } from 'react';
-import Task from './tasks/Task';
+import Task from './Task';
 import uniqid from 'uniqid';
-import UpdateTaskDialog from './UpdateTaskDialog';
+import AddUpdateTaskDialog from './AddUpdateTaskDialog';
 
 function TasksMainComponent({ categories, selectedCategoryId }) {
     const TASKS_KEY = "TASK_KEY"
     const [tasks, setTasks] = useState([])
     const [updateTaskId, setUpdateTaskId] = useState("");
+    const [isOpenAddUpdateTaskDialog, setIsOpenAddUpdateTaskDialog] = useState(false);
 
     /* Load local data */
     useEffect(() => {
@@ -77,19 +77,23 @@ function TasksMainComponent({ categories, selectedCategoryId }) {
         }
     }
 
-    function openUpdateTaskDialog(id) {
-        setUpdateTaskId(id);
+    function openAddUpdateTaskDialog(id = undefined) {
+        if (id !== undefined) {
+            setUpdateTaskId(id);
+        }
+        setIsOpenAddUpdateTaskDialog(true);
     }
 
-    function cancelUpdateTaskDialog() {
+    function cancelAddUpdateTaskDialog() {
         if (updateTaskId !== "") {
             setUpdateTaskId("")
         }
+        setIsOpenAddUpdateTaskDialog(false);
     }
 
     const taskElements = tasks.filter(task => selectedCategoryId === "0" || task.category_id === selectedCategoryId).map(task => {
         return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} removeTask={() => removeTask(task.id)}
-            openUpdateTaskDialog={() => openUpdateTaskDialog(task.id)} />
+            openAddUpdateTaskDialog={() => openAddUpdateTaskDialog(task.id)} />
     })
 
     const selectedCategory = categories.find(category => category.id === selectedCategoryId);
@@ -97,12 +101,16 @@ function TasksMainComponent({ categories, selectedCategoryId }) {
     return (
         <div className="TasksMainComponent">
             <h1 className='TasksMainComponent-title'>{selectedCategory === undefined ? "" : selectedCategory.title}</h1>
-            <AddTask saveTask={saveTask} />
+            <div className='TasksMainComponent-container'>
+                <button className='TasksMainComponent-addButton' onClick={openAddUpdateTaskDialog} >Add Task</button>
+            </div>
             {taskElements}
-            <UpdateTaskDialog
+            <AddUpdateTaskDialog
+                isOpenAddUpdateTaskDialog={isOpenAddUpdateTaskDialog}
                 task={tasks.find(task => task.id === updateTaskId)}
+                saveTask={saveTask}
                 updateTask={updateTask}
-                cancelUpdateTaskDialog={cancelUpdateTaskDialog}
+                cancelAddUpdateTaskDialog={cancelAddUpdateTaskDialog}
             />
         </div>
     );
