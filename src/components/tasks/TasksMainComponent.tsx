@@ -51,7 +51,7 @@ const TasksMainComponent: React.FC<Props> = ({
                 return [...oldTasks,
                 {
                     id: uniqid(),
-                    categoryId: selectedCategoryId,
+                    categoryId: formData.category?.value === undefined ? "0" : formData.category?.value,
                     title: formData.title,
                     details: formData.details,
                     isDone: false
@@ -87,7 +87,7 @@ const TasksMainComponent: React.FC<Props> = ({
     }
 
     function openAddUpdateTaskDialog(id: string | any) {
-        if (id === typeof "string") {
+        if (typeof id === 'string') {
             setUpdateTaskId(id);
         }
         setIsOpenAddUpdateTaskDialog(true);
@@ -120,6 +120,8 @@ const TasksMainComponent: React.FC<Props> = ({
                 saveTask={saveTask}
                 updateTask={updateTask}
                 cancelAddUpdateTaskDialog={cancelAddUpdateTaskDialog}
+                categories={categories}
+                selectedCategoryId={selectedCategoryId}
             />
         </div>
     );

@@ -1,6 +1,7 @@
 import './AddUpdateTaskDialog.css';
 import React, { useState, useEffect } from 'react'
 import Modal from "react-modal";
+import Select, { ActionMeta, SingleValue } from 'react-select'
 
 Modal.setAppElement("#root");
 
@@ -10,34 +11,80 @@ type Props = {
     saveTask: (formData: AddUpdateTaskFormData) => void
     updateTask: (task: ITask) => void
     cancelAddUpdateTaskDialog: () => void
+    categories: Array<ICategory>
+    selectedCategoryId: string
 }
 
-const AddUpdateTaskDialog: React.FC<Props> = ({ 
+const AddUpdateTaskDialog: React.FC<Props> = ({
     task,
     isOpenAddUpdateTaskDialog,
     saveTask,
     updateTask,
-    cancelAddUpdateTaskDialog
- }) => {
+    cancelAddUpdateTaskDialog,
+    categories,
+    selectedCategoryId
+}) => {
     const [formData, setFormData] = useState<AddUpdateTaskFormData>({
         title: "",
-        details: ""
+        details: "",
+        category: {
+            value: "0",
+            label: "All"
+        }
     })
+    const [selectCategories, setSelectCategories] = useState<{ value: string; label: string; }[]>([{
+        value: "0",
+        label: "All"
+    }])
 
     useEffect(() => {
-        if (task !== undefined) {
-            setFormData({
-                title: task.title,
-                details: task?.details
-            })
-        }
-    }, [task])
+        let categoriesPrep = categories.map(category => ({
+            value: category.id,
+            label: category.title
+        }))
+
+        setSelectCategories(old => [...old, ...categoriesPrep])
+
+        setFormData(() => {
+            let selectedCategory;
+            console.log(task)
+            if (task !== undefined && !isBlank(task.categoryId)) {
+                selectedCategory = categoriesPrep.find(option => option.value === task.categoryId)
+            } else {
+                selectedCategory = categoriesPrep.find(option => option.value === selectedCategoryId)
+            }
+            return {
+                title: task === undefined ? "" : task.title,
+                details: task === undefined ? "" : task.details,
+                category: {
+                    value: selectedCategory === undefined ? "0" : selectedCategory.value,
+                    label: selectedCategory === undefined ? "All" : selectedCategory.label
+                }
+            }
+        })
+
+    }, [task, setSelectCategories, categories, selectedCategoryId])
 
     const handleForm = (e: React.FormEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            [e.currentTarget.id]: e.currentTarget.value,
-        })
+        const { name, value } = e.currentTarget;
+        if (name !== null && value !== null) {
+            setFormData(old => ({
+                ...old,
+                [name]: value,
+            }))
+        }
+    }
+
+    const handleSelectChange = (newValue: SingleValue<{
+        value: string;
+        label: string;
+    }>) => {
+        if (newValue) {
+            setFormData(old => ({
+                ...old,
+                category: newValue,
+            }))
+        }
     }
 
     const handleSubmit = (e: React.SyntheticEvent) => {
@@ -66,7 +113,6 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
         cancelAddUpdateTaskDialog()
     }
 
-
     function isBlank(str: string) {
         return (!str || /^\s*$/.test(str));
     }
@@ -82,13 +128,15 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
             overlayClassName="AddUpdateTaskDialog-overlay">
             <form className='AddUpdateTaskDialog-form' onSubmit={handleSubmit}>
                 <div>
+                    <Select options={selectCategories} defaultValue={formData.category}
+                        onChange={handleSelectChange} name="category" />
                     <div className='AddUpdateTaskDialog-column '>
                         <label htmlFor='title'>Title:</label>
-                        <input className='AddUpdateTaskDialog-taskTitle' onChange={handleForm} type='text' id='title' value={formData.title} />
+                        <input className='AddUpdateTaskDialog-taskTitle' onChange={handleForm} type='text' name='title' value={formData.title} />
                     </div>
                     <div className='AddUpdateTaskDialog-column '>
                         <label htmlFor='details'>Details:</label>
-                        <input className='AddUpdateTaskDialog-taskDetails' onChange={handleForm} type='text' id='details' value={formData.details} />
+                        <input className='AddUpdateTaskDialog-taskDetails' onChange={handleForm} type='text' name='details' value={formData.details} />
                     </div>
                 </div>
                 <button className='AddUpdateTaskDialog-updateButton'  >{label}</button>

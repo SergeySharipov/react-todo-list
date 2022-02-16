@@ -16,6 +16,10 @@ interface ITask {
 interface AddUpdateTaskFormData {
     title: string
     details?: string
+    category?: {
+        value: string
+        label: string
+    }
 }
 
 interface AddUpdateCategoryFormData {

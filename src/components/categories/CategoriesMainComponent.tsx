@@ -42,7 +42,6 @@ const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, s
                 setCategories(defaultCategories)
             }
         }
-        console.log("setCategories")
         loadCategoriesFromLocalStorage()
     }, [setCategories])
 
@@ -98,7 +97,7 @@ const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, s
     }
 
     function openAddUpdateCategoryDialog(id: string | any) {
-        if (id === typeof "string") {
+        if (typeof id === "string") {
             setUpdateCategoryId(id);
         }
         setIsOpenAddUpdateCategoryDialog(true);
