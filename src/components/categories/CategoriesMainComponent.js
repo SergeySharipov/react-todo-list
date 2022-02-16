@@ -1,13 +1,12 @@
 import './CategoriesMainComponent.css';
 import { useState, useEffect } from 'react';
 import uniqid from 'uniqid';
-import AddCategory from './AddCategory';
 import Category from './Category';
-import UpdateCategoryDialog from './UpdateCategoryDialog';
-
+import AddUpdateCategoryDialog from './AddUpdateCategoryDialog';
 
 function CategoriesMainComponent({ categories, setCategories, setSelectedCategoryId, selectedCategoryId }) {
     const [updateCategoryId, setUpdateCategoryId] = useState("");
+    const [isOpenAddUpdateCategoryDialog, setIsOpenAddUpdateCategoryDialog] = useState(false);
     const CATEGORIES_KEY = "CATEGORIES_KEY"
     const defaultCategories = [
         {
@@ -92,14 +91,18 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
         setSelectedCategoryId(category.id)
     }
 
-    function openUpdateCategoryDialog(id) {
-        setUpdateCategoryId(id);
+    function openAddUpdateCategoryDialog(id = undefined) {
+        if (id !== undefined) {
+            setUpdateCategoryId(id);
+        }
+        setIsOpenAddUpdateCategoryDialog(true);
     }
 
-    function cancelUpdateCategoryDialog() {
+    function cancelAddUpdateCategoryDialog() {
         if (updateCategoryId !== "") {
             setUpdateCategoryId("")
         }
+        setIsOpenAddUpdateCategoryDialog(false);
     }
 
     const categoryElements = categories.map(category => {
@@ -109,17 +112,21 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
             selectedCategoryId={selectedCategoryId}
             selectCategory={() => selectCategory(category)}
             removeCategory={() => removeCategory(category.id)}
-            openUpdateCategoryDialog={() => openUpdateCategoryDialog(category.id)} />
+            openAddUpdateCategoryDialog={() => openAddUpdateCategoryDialog(category.id)} />
     })
 
     return (
         <div className="CategoriesMainComponent">
-            <AddCategory saveCategory={saveCategory} />
+            <div className='CategoriesMainComponent-container'>
+                <button className='CategoriesMainComponent-addButton' onClick={openAddUpdateCategoryDialog} >Add Category</button>
+            </div>
             {categoryElements}
-            <UpdateCategoryDialog
+            <AddUpdateCategoryDialog
+                isOpenAddUpdateCategoryDialog={isOpenAddUpdateCategoryDialog}
                 category={categories.find(task => task.id === updateCategoryId)}
+                saveCategory={saveCategory}
                 updateCategory={updateCategory}
-                cancelUpdateCategoryDialog={cancelUpdateCategoryDialog}
+                cancelAddUpdateCategoryDialog={cancelAddUpdateCategoryDialog}
             />
         </div>
     );

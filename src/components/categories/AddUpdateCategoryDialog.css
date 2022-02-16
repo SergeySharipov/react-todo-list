@@ -1,4 +1,4 @@
-.UpdateCategoryDialog {
+.AddUpdateCategoryDialog {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -7,7 +7,7 @@
     outline: none;
 }
 
-.UpdateCategoryDialog-overlay {
+.AddUpdateCategoryDialog-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -16,7 +16,7 @@
     background-color: rgba(0, 0, 0, 0.75);
 }
 
-.UpdateCategoryDialog-form {
+.AddUpdateCategoryDialog-form {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -28,14 +28,14 @@
     border-radius: 15px;
 }
 
-.UpdateCategoryDialog-column {
+.AddUpdateCategoryDialog-column {
     display: flex;
     flex-grow: 4;
     margin: 15px 5px 15px 5px;
     flex-direction: column;
 }
 
-.UpdateCategoryDialog-updateButton {
+.AddUpdateCategoryDialog-updateButton {
     flex-grow: 4;
     font-size: large;
     background-color: white;
@@ -46,12 +46,12 @@
     border-radius: 15px;
 }
 
-.UpdateCategoryDialog-updateButton:hover {
+.AddUpdateCategoryDialog-updateButton:hover {
     background-color: #4CAF50;
     color: white;
 }
 
-.AddTaskForm-taskTitle {
+.AddCategoryForm-categoryTitle {
     flex-grow: 4;
     font-size: large;
 }
