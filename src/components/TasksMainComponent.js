@@ -28,7 +28,6 @@ function TasksMainComponent({ categories, selectedCategoryId }) {
             localStorage.setItem(TASKS_KEY, JSON.stringify(tasks))
         }
         if (tasks.length !== 0) {
-            // TODO Fix: saveTasks called unneccesary once after saved tasks loaded
             saveTasksToLocalStorage()
         }
     }, [tasks])

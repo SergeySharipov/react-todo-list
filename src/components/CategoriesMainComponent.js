@@ -35,7 +35,7 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
                 /* Add default categories */
                 setCategories(defaultCategories)
             }
-            selectCategory(defaultCategories[0].id)
+            selectCategory(defaultCategories[0])
         }
 
         loadCategoriesFromLocalStorage()
@@ -81,15 +81,15 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
 
     function removeCategory(id) {
         if (!isBlank(id)) {
-            if (selectedCategoryId === id) {
-                selectCategory(defaultCategories[0].id)
-            }
             setCategories(oldCategories => oldCategories.filter(category => category.id !== id))
+            if (selectedCategoryId === id) {
+                selectCategory(defaultCategories[0])
+            }
         }
     }
 
-    function selectCategory(id) {
-        setSelectedCategoryId(id)
+    function selectCategory(category) {
+        setSelectedCategoryId(category.id)
     }
 
     function openUpdateCategoryDialog(id) {
@@ -107,7 +107,7 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
             key={category.id}
             category={category}
             selectedCategoryId={selectedCategoryId}
-            selectCategory={() => selectCategory(category.id)}
+            selectCategory={() => selectCategory(category)}
             removeCategory={() => removeCategory(category.id)}
             openUpdateCategoryDialog={() => openUpdateCategoryDialog(category.id)} />
     })
