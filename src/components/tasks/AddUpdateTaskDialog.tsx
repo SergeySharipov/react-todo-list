@@ -4,30 +4,53 @@ import Modal from "react-modal";
 
 Modal.setAppElement("#root");
 
-const AddUpdateTaskDialog = ({ isOpenAddUpdateTaskDialog, task, saveTask, updateTask, cancelAddUpdateTaskDialog }) => {
-    const [formData, setFormData] = useState({
+type Props = {
+    task: ITask | undefined
+    isOpenAddUpdateTaskDialog: boolean
+    saveTask: (formData: AddUpdateTaskFormData) => void
+    updateTask: (task: ITask) => void
+    cancelAddUpdateTaskDialog: () => void
+}
+
+const AddUpdateTaskDialog: React.FC<Props> = ({ 
+    task,
+    isOpenAddUpdateTaskDialog,
+    saveTask,
+    updateTask,
+    cancelAddUpdateTaskDialog
+ }) => {
+    const [formData, setFormData] = useState<AddUpdateTaskFormData>({
         title: "",
-        description: ""
+        details: ""
     })
 
     useEffect(() => {
-        setFormData(task)
+        if (task !== undefined) {
+            setFormData({
+                title: task.title,
+                details: task?.details
+            })
+        }
     }, [task])
 
-    const handleForm = (e) => {
+    const handleForm = (e: React.FormEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.currentTarget.id]: e.currentTarget.value,
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
         if (!isBlank(formData.title)) {
             if (task === undefined) {
-                saveTask(formData.title, formData.details)
+                saveTask(formData)
             } else {
-                updateTask(formData)
+                updateTask({
+                    ...task,
+                    title: formData.title,
+                    details: formData.details
+                })
             }
             handleCancelAddUpdateTaskDialog()
         } else {
@@ -38,13 +61,13 @@ const AddUpdateTaskDialog = ({ isOpenAddUpdateTaskDialog, task, saveTask, update
     function handleCancelAddUpdateTaskDialog() {
         setFormData({
             title: "",
-            description: ""
+            details: ""
         })
         cancelAddUpdateTaskDialog()
     }
 
 
-    function isBlank(str) {
+    function isBlank(str: string) {
         return (!str || /^\s*$/.test(str));
     }
 
@@ -61,11 +84,11 @@ const AddUpdateTaskDialog = ({ isOpenAddUpdateTaskDialog, task, saveTask, update
                 <div>
                     <div className='AddUpdateTaskDialog-column '>
                         <label htmlFor='title'>Title:</label>
-                        <input className='AddUpdateTaskDialog-taskTitle' onChange={handleForm} type='text' id='title' value={formData !== undefined ? formData.title : ""} />
+                        <input className='AddUpdateTaskDialog-taskTitle' onChange={handleForm} type='text' id='title' value={formData.title} />
                     </div>
                     <div className='AddUpdateTaskDialog-column '>
-                        <label htmlFor='description'>Details:</label>
-                        <input className='AddUpdateTaskDialog-taskDetails' onChange={handleForm} type='text' id='details' value={formData !== undefined ? formData.details : ""} />
+                        <label htmlFor='details'>Details:</label>
+                        <input className='AddUpdateTaskDialog-taskDetails' onChange={handleForm} type='text' id='details' value={formData.details} />
                     </div>
                 </div>
                 <button className='AddUpdateTaskDialog-updateButton'  >{label}</button>

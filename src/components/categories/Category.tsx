@@ -2,27 +2,36 @@ import './Category.css';
 import ic_edit from "../../images/ic_edit.svg"
 import ic_delete from "../../images/ic_delete.svg"
 
-function Category({ category, selectCategory, selectedCategoryId, removeCategory, openAddUpdateCategoryDialog }) {
+type Props = {
+  category: ICategory
+  selectedCategoryId: string
+  selectCategory: () => void
+  removeCategory: (() => void) | undefined
+  openAddUpdateCategoryDialog: (() => void) | undefined
+}
 
-  function handleSelectCategory(e) {
+const Category: React.FC<Props> = ({ category, selectedCategoryId, selectCategory, removeCategory, openAddUpdateCategoryDialog }) => {
+
+  function handleSelectCategory(e: React.SyntheticEvent) {
     if (e.defaultPrevented) return;
     selectCategory()
   }
 
-  function handleOpenAddUpdateCategoryDialog(e) {
+  function handleOpenAddUpdateCategoryDialog(e: React.SyntheticEvent) {
+
     e.preventDefault()
-    openAddUpdateCategoryDialog()
+    if (openAddUpdateCategoryDialog) openAddUpdateCategoryDialog()
   }
 
-  function handleRemoveCategory(e) {
+  function handleRemoveCategory(e: React.SyntheticEvent) {
     e.preventDefault()
-    removeCategory()
+    if (removeCategory) removeCategory()
   }
 
   return (
     <div className={selectedCategoryId === category.id ? 'Category-selected' : 'Category'} onClick={handleSelectCategory}>
       <h3 className='Category-title'>{category.title}</h3>
-      {!category.notEditable && <div className='Category-actions'>
+      {openAddUpdateCategoryDialog !== undefined && <div className='Category-actions'>
         <button className="Category-editButton" onClick={handleOpenAddUpdateCategoryDialog} ><img src={ic_edit} alt="Edit" /></button>
         <button className="Category-deleteButton" onClick={handleRemoveCategory} ><img src={ic_delete} alt="Delete" /></button>
       </div>}

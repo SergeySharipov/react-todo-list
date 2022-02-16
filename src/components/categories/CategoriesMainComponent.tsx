@@ -4,16 +4,22 @@ import uniqid from 'uniqid';
 import Category from './Category';
 import AddUpdateCategoryDialog from './AddUpdateCategoryDialog';
 
-function CategoriesMainComponent({ categories, setCategories, setSelectedCategoryId, selectedCategoryId }) {
+type Props = {
+    categories: ICategory[]
+    setCategories: (React.Dispatch<React.SetStateAction<ICategory[]>>)
+    setSelectedCategoryId: (id: string) => void
+    selectedCategoryId: string
+}
+
+const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, setSelectedCategoryId, selectedCategoryId }) => {
+    const showAllCategory = {
+        id: "0",
+        title: "All"
+    };
     const [updateCategoryId, setUpdateCategoryId] = useState("");
     const [isOpenAddUpdateCategoryDialog, setIsOpenAddUpdateCategoryDialog] = useState(false);
     const CATEGORIES_KEY = "CATEGORIES_KEY"
     const defaultCategories = [
-        {
-            id: "0",
-            title: "All",
-            notEditable: true
-        },
         {
             id: "1",
             title: "Daily tasks"
@@ -27,14 +33,14 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
     /* Load local data */
     useEffect(() => {
         function loadCategoriesFromLocalStorage() {
-            const savedCategories = JSON.parse(localStorage.getItem(CATEGORIES_KEY))
-            if (savedCategories !== null) {
+            const savedCategoriesStr = localStorage.getItem(CATEGORIES_KEY)
+            if (savedCategoriesStr !== null) {
+                const savedCategories = JSON.parse(savedCategoriesStr)
                 setCategories(savedCategories)
             } else {
                 /* Add default categories */
                 setCategories(defaultCategories)
             }
-            selectCategory(defaultCategories[0])
         }
 
         loadCategoriesFromLocalStorage()
@@ -50,24 +56,24 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
         }
     }, [categories])
 
-    function isBlank(str) {
+    function isBlank(str: string) {
         return (!str || /^\s*$/.test(str));
     }
 
-    function saveCategory(title) {
-        if (!isBlank(title)) {
+    function saveCategory(formData: AddUpdateCategoryFormData) {
+        if (!isBlank(formData.title)) {
             setCategories(oldCategories => {
                 return [...oldCategories,
                 {
                     id: uniqid(),
-                    title: title
+                    title: formData.title
                 }
                 ]
             })
         }
     }
 
-    function updateCategory(category) {
+    function updateCategory(category: ICategory) {
         if (!isBlank(category.title)) {
             setCategories(oldCategories => {
                 return oldCategories.map(oldCategory => category.id === oldCategory.id ? {
@@ -78,21 +84,21 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
         }
     }
 
-    function removeCategory(id) {
+    function removeCategory(id: string) {
         if (!isBlank(id)) {
             setCategories(oldCategories => oldCategories.filter(category => category.id !== id))
             if (selectedCategoryId === id) {
-                selectCategory(defaultCategories[0])
+                selectCategory(showAllCategory.id)
             }
         }
     }
 
-    function selectCategory(category) {
-        setSelectedCategoryId(category.id)
+    function selectCategory(id: string) {
+        setSelectedCategoryId(id)
     }
 
-    function openAddUpdateCategoryDialog(id = undefined) {
-        if (id !== undefined) {
+    function openAddUpdateCategoryDialog(id: string | any) {
+        if (id === typeof "string") {
             setUpdateCategoryId(id);
         }
         setIsOpenAddUpdateCategoryDialog(true);
@@ -110,7 +116,7 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
             key={category.id}
             category={category}
             selectedCategoryId={selectedCategoryId}
-            selectCategory={() => selectCategory(category)}
+            selectCategory={() => selectCategory(category.id)}
             removeCategory={() => removeCategory(category.id)}
             openAddUpdateCategoryDialog={() => openAddUpdateCategoryDialog(category.id)} />
     })
@@ -120,6 +126,12 @@ function CategoriesMainComponent({ categories, setCategories, setSelectedCategor
             <div className='CategoriesMainComponent-container'>
                 <button className='CategoriesMainComponent-addButton' onClick={openAddUpdateCategoryDialog} >Add Category</button>
             </div>
+            <Category
+                category={showAllCategory}
+                selectedCategoryId={selectedCategoryId}
+                selectCategory={() => selectCategory(showAllCategory.id)}
+                removeCategory={undefined}
+                openAddUpdateCategoryDialog={undefined} />
             {categoryElements}
             <AddUpdateCategoryDialog
                 isOpenAddUpdateCategoryDialog={isOpenAddUpdateCategoryDialog}

@@ -5,7 +5,7 @@ import TasksMainComponent from './components/tasks/TasksMainComponent';
 import { useState } from "react";
 
 function App() {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState<ICategory[]>([])
   const [selectedCategoryId, setSelectedCategoryId] = useState("0")
 
   return (

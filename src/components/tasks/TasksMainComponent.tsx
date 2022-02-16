@@ -4,17 +4,26 @@ import Task from './Task';
 import uniqid from 'uniqid';
 import AddUpdateTaskDialog from './AddUpdateTaskDialog';
 
-function TasksMainComponent({ categories, selectedCategoryId }) {
+type Props = {
+    categories: Array<ICategory>
+    selectedCategoryId: string
+}
+
+const TasksMainComponent: React.FC<Props> = ({
+    categories,
+    selectedCategoryId
+}) => {
     const TASKS_KEY = "TASK_KEY"
-    const [tasks, setTasks] = useState([])
-    const [updateTaskId, setUpdateTaskId] = useState("");
-    const [isOpenAddUpdateTaskDialog, setIsOpenAddUpdateTaskDialog] = useState(false);
+    const [tasks, setTasks] = useState<ITask[]>([])
+    const [updateTaskId, setUpdateTaskId] = useState<string>("");
+    const [isOpenAddUpdateTaskDialog, setIsOpenAddUpdateTaskDialog] = useState<boolean>(false);
 
     /* Load local data */
     useEffect(() => {
         function loadTasksFromLocalStorage() {
-            const savedTasks = JSON.parse(localStorage.getItem(TASKS_KEY))
-            if (savedTasks !== null) {
+            const savedTasksStr = localStorage.getItem(TASKS_KEY)
+            if (savedTasksStr !== null) {
+                const savedTasks = JSON.parse(savedTasksStr)
                 setTasks(savedTasks)
             }
         }
@@ -32,19 +41,19 @@ function TasksMainComponent({ categories, selectedCategoryId }) {
         }
     }, [tasks])
 
-    function isBlank(str) {
+    function isBlank(str: string) {
         return (!str || /^\s*$/.test(str));
     }
 
-    function saveTask(title, details) {
-        if (!isBlank(title)) {
+    function saveTask(formData: AddUpdateTaskFormData) {
+        if (!isBlank(formData.title)) {
             setTasks(oldTasks => {
                 return [...oldTasks,
                 {
                     id: uniqid(),
-                    category_id: selectedCategoryId,
-                    title: title,
-                    details: details,
+                    categoryId: selectedCategoryId,
+                    title: formData.title,
+                    details: formData.details,
                     isDone: false
                 }
                 ]
@@ -52,12 +61,12 @@ function TasksMainComponent({ categories, selectedCategoryId }) {
         }
     }
 
-    function updateTask(task) {
+    function updateTask(task: ITask) {
         if (!isBlank(task.title)) {
             setTasks(oldTasks => {
                 return oldTasks.map(oldTask => task.id === oldTask.id ? {
                     ...oldTask,
-                    category_id: task.categoryId,
+                    categoryId: task.categoryId,
                     title: task.title,
                     details: task.details
                 } : oldTask)
@@ -65,20 +74,20 @@ function TasksMainComponent({ categories, selectedCategoryId }) {
         }
     }
 
-    function toggleIsDone(taskId) {
+    function toggleIsDone(taskId: string) {
         setTasks(oldTasks => {
             return oldTasks.map(task => task.id === taskId ? { ...task, isDone: !task.isDone } : task)
         })
     }
 
-    function removeTask(id) {
+    function removeTask(id: string) {
         if (!isBlank(id)) {
             setTasks(oldTasks => oldTasks.filter(task => task.id !== id))
         }
     }
 
-    function openAddUpdateTaskDialog(id = undefined) {
-        if (id !== undefined) {
+    function openAddUpdateTaskDialog(id: string | any) {
+        if (id === typeof "string") {
             setUpdateTaskId(id);
         }
         setIsOpenAddUpdateTaskDialog(true);
@@ -91,7 +100,7 @@ function TasksMainComponent({ categories, selectedCategoryId }) {
         setIsOpenAddUpdateTaskDialog(false);
     }
 
-    const taskElements = tasks.filter(task => selectedCategoryId === "0" || task.category_id === selectedCategoryId).map(task => {
+    const taskElements = tasks.filter(task => selectedCategoryId === "0" || task.categoryId === selectedCategoryId).map(task => {
         return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} removeTask={() => removeTask(task.id)}
             openAddUpdateTaskDialog={() => openAddUpdateTaskDialog(task.id)} />
     })
@@ -100,7 +109,7 @@ function TasksMainComponent({ categories, selectedCategoryId }) {
 
     return (
         <div className="TasksMainComponent">
-            <h1 className='TasksMainComponent-title'>{selectedCategory === undefined ? "" : selectedCategory.title}</h1>
+            <h1 className='TasksMainComponent-title'>{selectedCategory === undefined ? "All" : selectedCategory.title}</h1>
             <div className='TasksMainComponent-container'>
                 <button className='TasksMainComponent-addButton' onClick={openAddUpdateTaskDialog} >Add Task</button>
             </div>

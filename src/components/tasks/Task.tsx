@@ -2,7 +2,14 @@ import './Task.css';
 import ic_edit from "../../images/ic_edit.svg"
 import ic_delete from "../../images/ic_delete.svg"
 
-function Task({ task, toggleIsDone, removeTask, openAddUpdateTaskDialog }) {
+type Props = {
+    task: ITask
+    toggleIsDone: () => void
+    removeTask: () => void
+    openAddUpdateTaskDialog: () => void
+}
+
+const Task: React.FC<Props> = ({ task, toggleIsDone, removeTask, openAddUpdateTaskDialog }) => {
     return (
         <div className='Task'>
             <input className="Task-checkbox" type="checkbox" checked={task.isDone} onChange={toggleIsDone} />
