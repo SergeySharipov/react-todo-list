@@ -1,7 +1,7 @@
 import './AddUpdateTaskDialog.css';
 import React, { useState, useEffect } from 'react'
 import Modal from "react-modal";
-import Select, { ActionMeta, SingleValue } from 'react-select'
+import Select, { SingleValue } from 'react-select'
 
 Modal.setAppElement("#root");
 
@@ -38,32 +38,37 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
     }])
 
     useEffect(() => {
-        let categoriesPrep = categories.map(category => ({
-            value: category.id,
-            label: category.title
-        }))
+        if (selectCategories.length === 1 && categories.length !== 0) {
+            let categoriesPrep = categories.map(category => ({
+                value: category.id,
+                label: category.title
+            }))
 
-        setSelectCategories(old => [...old, ...categoriesPrep])
+            setSelectCategories(old => [...old, ...categoriesPrep])
+        }
+    }, [selectCategories, setSelectCategories, categories])
 
-        setFormData(() => {
-            let selectedCategory;
-            console.log(task)
-            if (task !== undefined && !isBlank(task.categoryId)) {
-                selectedCategory = categoriesPrep.find(option => option.value === task.categoryId)
-            } else {
-                selectedCategory = categoriesPrep.find(option => option.value === selectedCategoryId)
-            }
-            return {
-                title: task === undefined ? "" : task.title,
-                details: task === undefined ? "" : task.details,
-                category: {
-                    value: selectedCategory === undefined ? "0" : selectedCategory.value,
-                    label: selectedCategory === undefined ? "All" : selectedCategory.label
+    useEffect(() => {
+        if (isOpenAddUpdateTaskDialog) {
+            setFormData(() => {
+                let selectedCategory;
+                console.log(task)
+                if (task !== undefined && !isBlank(task.categoryId)) {
+                    selectedCategory = categories.find(option => option.id === task.categoryId)
+                } else {
+                    selectedCategory = categories.find(option => option.id === selectedCategoryId)
                 }
-            }
-        })
-
-    }, [task, setSelectCategories, categories, selectedCategoryId])
+                return {
+                    title: task === undefined ? "" : task.title,
+                    details: task === undefined ? "" : task.details,
+                    category: {
+                        value: selectedCategory === undefined ? "0" : selectedCategory.id,
+                        label: selectedCategory === undefined ? "All" : selectedCategory.title
+                    }
+                }
+            })
+        }
+    }, [isOpenAddUpdateTaskDialog, task, categories, selectedCategoryId])
 
     const handleForm = (e: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget;
@@ -108,7 +113,11 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
     function handleCancelAddUpdateTaskDialog() {
         setFormData({
             title: "",
-            details: ""
+            details: "",
+            category: {
+                value: "0",
+                label: "All"
+            }
         })
         cancelAddUpdateTaskDialog()
     }

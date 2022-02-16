@@ -50,9 +50,8 @@ const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, s
         function saveCategoriesToLocalStorage() {
             localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories))
         }
-        if (categories.length !== 0) {
-            saveCategoriesToLocalStorage()
-        }
+
+        saveCategoriesToLocalStorage()
     }, [categories])
 
     function isBlank(str: string) {

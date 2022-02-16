@@ -36,9 +36,8 @@ const TasksMainComponent: React.FC<Props> = ({
         function saveTasksToLocalStorage() {
             localStorage.setItem(TASKS_KEY, JSON.stringify(tasks))
         }
-        if (tasks.length !== 0) {
-            saveTasksToLocalStorage()
-        }
+
+        saveTasksToLocalStorage()
     }, [tasks])
 
     function isBlank(str: string) {
