@@ -19,19 +19,19 @@ const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, s
     const [updateCategoryId, setUpdateCategoryId] = useState("");
     const [isOpenAddUpdateCategoryDialog, setIsOpenAddUpdateCategoryDialog] = useState(false);
     const CATEGORIES_KEY = "CATEGORIES_KEY"
-    const defaultCategories = [
-        {
-            id: "1",
-            title: "Daily tasks"
-        },
-        {
-            id: "2",
-            title: "Shopping"
-        }
-    ]
 
     /* Load local data */
     useEffect(() => {
+        const defaultCategories = [
+            {
+                id: "1",
+                title: "Daily tasks"
+            },
+            {
+                id: "2",
+                title: "Shopping"
+            }
+        ]
         function loadCategoriesFromLocalStorage() {
             const savedCategoriesStr = localStorage.getItem(CATEGORIES_KEY)
             if (savedCategoriesStr !== null) {
@@ -42,9 +42,9 @@ const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, s
                 setCategories(defaultCategories)
             }
         }
-
+        console.log("setCategories")
         loadCategoriesFromLocalStorage()
-    }, [])
+    }, [setCategories])
 
     /* Save categories to local storage */
     useEffect(() => {
