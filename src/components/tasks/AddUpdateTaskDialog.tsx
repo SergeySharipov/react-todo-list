@@ -110,7 +110,7 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
         }
     }
 
-    function handleCancelAddUpdateTaskDialog() {
+    const handleCancelAddUpdateTaskDialog = () => {
         setFormData({
             title: "",
             details: "",
@@ -120,11 +120,11 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
             }
         })
         cancelAddUpdateTaskDialog()
-    }
+    };
 
-    function isBlank(str: string) {
-        return (!str || /^\s*$/.test(str));
-    }
+    const isBlank = (str: string) => {
+        return !str || /^\s*$/.test(str);
+    };
 
     const label = task === undefined ? "Add Task" : "Update Task";
 

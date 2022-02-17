@@ -20,13 +20,13 @@ const TasksMainComponent: React.FC<Props> = ({
 
     /* Load local data */
     useEffect(() => {
-        function loadTasksFromLocalStorage() {
+        const loadTasksFromLocalStorage = () => {
             const savedTasksStr = localStorage.getItem(TASKS_KEY)
             if (savedTasksStr !== null) {
                 const savedTasks = JSON.parse(savedTasksStr)
                 setTasks(savedTasks)
             }
-        }
+        };
 
         loadTasksFromLocalStorage()
     }, [])
@@ -40,11 +40,11 @@ const TasksMainComponent: React.FC<Props> = ({
         saveTasksToLocalStorage()
     }, [tasks])
 
-    function isBlank(str: string) {
-        return (!str || /^\s*$/.test(str));
-    }
+    const isBlank = (str: string) => {
+        return !str || /^\s*$/.test(str);
+    };
 
-    function saveTask(formData: AddUpdateTaskFormData) {
+    const saveTask = (formData: AddUpdateTaskFormData) => {
         if (!isBlank(formData.title)) {
             setTasks(oldTasks => {
                 return [...oldTasks,
@@ -58,9 +58,9 @@ const TasksMainComponent: React.FC<Props> = ({
                 ]
             })
         }
-    }
+    };
 
-    function updateTask(task: ITask) {
+    const updateTask = (task: ITask) => {
         if (!isBlank(task.title)) {
             setTasks(oldTasks => {
                 return oldTasks.map(oldTask => task.id === oldTask.id ? {
@@ -71,33 +71,33 @@ const TasksMainComponent: React.FC<Props> = ({
                 } : oldTask)
             })
         }
-    }
+    };
 
-    function toggleIsDone(taskId: string) {
+    const toggleIsDone = (taskId: string) => {
         setTasks(oldTasks => {
             return oldTasks.map(task => task.id === taskId ? { ...task, isDone: !task.isDone } : task)
         })
-    }
+    };
 
-    function removeTask(id: string) {
+    const removeTask = (id: string) => {
         if (!isBlank(id)) {
             setTasks(oldTasks => oldTasks.filter(task => task.id !== id))
         }
-    }
+    };
 
-    function openAddUpdateTaskDialog(id: string | any) {
+    const openAddUpdateTaskDialog = (id: string | any) => {
         if (typeof id === 'string') {
             setUpdateTaskId(id);
         }
         setIsOpenAddUpdateTaskDialog(true);
-    }
+    };
 
-    function cancelAddUpdateTaskDialog() {
+    const cancelAddUpdateTaskDialog = () => {
         if (updateTaskId !== "") {
             setUpdateTaskId("")
         }
         setIsOpenAddUpdateTaskDialog(false);
-    }
+    };
 
     const taskElements = tasks.filter(task => selectedCategoryId === "0" || task.categoryId === selectedCategoryId).map(task => {
         return <Task key={task.id} task={task} toggleIsDone={() => toggleIsDone(task.id)} removeTask={() => removeTask(task.id)}

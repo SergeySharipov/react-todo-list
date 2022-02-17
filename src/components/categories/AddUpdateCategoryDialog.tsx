@@ -14,71 +14,71 @@ type Props = {
 
 const AddUpdateCategoryDialog: React.FC<Props>
     = ({ category, isOpenAddUpdateCategoryDialog, saveCategory, updateCategory, cancelAddUpdateCategoryDialog }) => {
-        const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({
+        title: ""
+    })
+
+    useEffect(() => {
+        if (category !== undefined) {
+            setFormData(category)
+        }
+    }, [category])
+
+    const handleForm = (e: React.FormEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.currentTarget.id]: e.currentTarget.value,
+        })
+    }
+
+    const handleSubmit = (e: React.SyntheticEvent) => {
+        e.preventDefault()
+        if (!isBlank(formData.title)) {
+            if (category === undefined) {
+                saveCategory(formData)
+            } else {
+                updateCategory({
+                    ...category,
+                    title: formData.title
+                })
+            }
+            handleCancelAddUpdateCategoryDialog()
+        } else {
+            alert("Title can not be empty!")
+        }
+    }
+
+    const handleCancelAddUpdateCategoryDialog = () => {
+        setFormData({
             title: ""
         })
+        cancelAddUpdateCategoryDialog()
+    };
 
-        useEffect(() => {
-            if (category !== undefined) {
-                setFormData(category)
-            }
-        }, [category])
+    const isBlank = (str: string) => {
+        return !str || /^\s*$/.test(str);
+    };
 
-        const handleForm = (e: React.FormEvent<HTMLInputElement>) => {
-            setFormData({
-                ...formData,
-                [e.currentTarget.id]: e.currentTarget.value,
-            })
-        }
+    const label = category === undefined ? "Add Category" : "Update Category";
 
-        const handleSubmit = (e: React.SyntheticEvent) => {
-            e.preventDefault()
-            if (!isBlank(formData.title)) {
-                if (category === undefined) {
-                    saveCategory(formData)
-                } else {
-                    updateCategory({
-                        ...category,
-                        title: formData.title
-                    })
-                }
-                handleCancelAddUpdateCategoryDialog()
-            } else {
-                alert("Title can not be empty!")
-            }
-        }
-
-        function handleCancelAddUpdateCategoryDialog() {
-            setFormData({
-                title: ""
-            })
-            cancelAddUpdateCategoryDialog()
-        }
-
-        function isBlank(str: string) {
-            return (!str || /^\s*$/.test(str));
-        }
-
-        const label = category === undefined ? "Add Category" : "Update Category";
-
-        return (
-            <Modal
-                isOpen={isOpenAddUpdateCategoryDialog}
-                contentLabel={label}
-                className="AddUpdateCategoryDialog"
-                onRequestClose={handleCancelAddUpdateCategoryDialog}
-                overlayClassName="AddUpdateCategoryDialog-overlay">
-                <form className='AddUpdateCategoryDialog-form' onSubmit={handleSubmit}>
-                    <div>
-                        <div className='AddUpdateCategoryDialog-column '>
-                            <label htmlFor='title'>Title:</label>
-                            <input className='AddUpdateCategoryDialog-categoryTitle' onChange={handleForm} type='text' id='title' value={formData !== undefined ? formData.title : ""} />
-                        </div>
+    return (
+        <Modal
+            isOpen={isOpenAddUpdateCategoryDialog}
+            contentLabel={label}
+            className="AddUpdateCategoryDialog"
+            onRequestClose={handleCancelAddUpdateCategoryDialog}
+            overlayClassName="AddUpdateCategoryDialog-overlay">
+            <form className='AddUpdateCategoryDialog-form' onSubmit={handleSubmit}>
+                <div>
+                    <div className='AddUpdateCategoryDialog-column '>
+                        <label htmlFor='title'>Title:</label>
+                        <input className='AddUpdateCategoryDialog-categoryTitle' onChange={handleForm} type='text' id='title' value={formData !== undefined ? formData.title : ""} />
                     </div>
-                    <button className='AddUpdateCategoryDialog-updateButton'>{label}</button>
-                </form>
-            </Modal>
-        )
-    }
+                </div>
+                <button className='AddUpdateCategoryDialog-updateButton'>{label}</button>
+            </form>
+        </Modal>
+    )
+}
 
 export default AddUpdateCategoryDialog

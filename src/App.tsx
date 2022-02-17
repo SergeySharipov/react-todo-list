@@ -4,7 +4,7 @@ import CategoriesMainComponent from './components/categories/CategoriesMainCompo
 import TasksMainComponent from './components/tasks/TasksMainComponent';
 import { useState } from "react";
 
-function App() {
+const App = () => {
   const [categories, setCategories] = useState<ICategory[]>([])
   const [selectedCategoryId, setSelectedCategoryId] = useState("0")
   
@@ -26,6 +26,6 @@ function App() {
       </main>
     </div>
   );
-}
+};
 
 export default App;

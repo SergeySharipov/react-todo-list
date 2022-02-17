@@ -11,32 +11,31 @@ type Props = {
 }
 
 const Category: React.FC<Props> = ({ category, selectedCategoryId, selectCategory, removeCategory, openAddUpdateCategoryDialog }) => {
+    const handleSelectCategory = (e: React.SyntheticEvent) => {
+      if (e.defaultPrevented) return;
+      selectCategory()
+    };
 
-  function handleSelectCategory(e: React.SyntheticEvent) {
-    if (e.defaultPrevented) return;
-    selectCategory()
-  }
+    const handleOpenAddUpdateCategoryDialog = (e: React.SyntheticEvent) => {
 
-  function handleOpenAddUpdateCategoryDialog(e: React.SyntheticEvent) {
+      e.preventDefault()
+      if (openAddUpdateCategoryDialog) openAddUpdateCategoryDialog()
+    };
 
-    e.preventDefault()
-    if (openAddUpdateCategoryDialog) openAddUpdateCategoryDialog()
-  }
+    const handleRemoveCategory = (e: React.SyntheticEvent) => {
+      e.preventDefault()
+      if (removeCategory) removeCategory()
+    };
 
-  function handleRemoveCategory(e: React.SyntheticEvent) {
-    e.preventDefault()
-    if (removeCategory) removeCategory()
-  }
-
-  return (
-    <div className={selectedCategoryId === category.id ? 'Category-selected' : 'Category'} onClick={handleSelectCategory}>
-      <h3 className='Category-title'>{category.title}</h3>
-      {openAddUpdateCategoryDialog !== undefined && <div className='Category-actions'>
-        <button className="Category-editButton" onClick={handleOpenAddUpdateCategoryDialog} ><img src={ic_edit} alt="Edit" /></button>
-        <button className="Category-deleteButton" onClick={handleRemoveCategory} ><img src={ic_delete} alt="Delete" /></button>
-      </div>}
-    </div>
-  );
+    return (
+      <div className={selectedCategoryId === category.id ? 'Category-selected' : 'Category'} onClick={handleSelectCategory}>
+        <h3 className='Category-title'>{category.title}</h3>
+        {openAddUpdateCategoryDialog !== undefined && <div className='Category-actions'>
+          <button className="Category-editButton" onClick={handleOpenAddUpdateCategoryDialog} ><img src={ic_edit} alt="Edit" /></button>
+          <button className="Category-deleteButton" onClick={handleRemoveCategory} ><img src={ic_delete} alt="Delete" /></button>
+        </div>}
+      </div>
+    );
 }
 
 export default Category;

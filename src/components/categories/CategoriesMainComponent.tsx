@@ -54,11 +54,11 @@ const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, s
         saveCategoriesToLocalStorage()
     }, [categories])
 
-    function isBlank(str: string) {
-        return (!str || /^\s*$/.test(str));
-    }
+    const isBlank = (str: string) => {
+        return !str || /^\s*$/.test(str);
+    };
 
-    function saveCategory(formData: AddUpdateCategoryFormData) {
+    const saveCategory = (formData: AddUpdateCategoryFormData) => {
         if (!isBlank(formData.title)) {
             setCategories(oldCategories => {
                 return [...oldCategories,
@@ -69,9 +69,9 @@ const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, s
                 ]
             })
         }
-    }
+    };
 
-    function updateCategory(category: ICategory) {
+    const updateCategory = (category: ICategory) => {
         if (!isBlank(category.title)) {
             setCategories(oldCategories => {
                 return oldCategories.map(oldCategory => category.id === oldCategory.id ? {
@@ -80,34 +80,34 @@ const CategoriesMainComponent: React.FC<Props> = ({ categories, setCategories, s
                 } : oldCategory)
             })
         }
-    }
+    };
 
-    function removeCategory(id: string) {
+    const removeCategory = (id: string) => {
         if (!isBlank(id)) {
             setCategories(oldCategories => oldCategories.filter(category => category.id !== id))
             if (selectedCategoryId === id) {
                 selectCategory(showAllCategory.id)
             }
         }
-    }
+    };
 
-    function selectCategory(id: string) {
+    const selectCategory = (id: string) => {
         setSelectedCategoryId(id)
-    }
+    };
 
-    function openAddUpdateCategoryDialog(id: string | any) {
+    const openAddUpdateCategoryDialog = (id: string | any) => {
         if (typeof id === "string") {
             setUpdateCategoryId(id);
         }
         setIsOpenAddUpdateCategoryDialog(true);
-    }
+    };
 
-    function cancelAddUpdateCategoryDialog() {
+    const cancelAddUpdateCategoryDialog = () => {
         if (updateCategoryId !== "") {
             setUpdateCategoryId("")
         }
         setIsOpenAddUpdateCategoryDialog(false);
-    }
+    };
 
     const categoryElements = categories.map(category => {
         return <Category
