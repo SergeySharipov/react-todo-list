@@ -15,6 +15,11 @@ type Props = {
     selectedCategoryId: string
 }
 
+const categoryOptionAll = {
+    value: "0",
+    label: "All"
+}
+
 const AddUpdateTaskDialog: React.FC<Props> = ({
     task,
     isOpenAddUpdateTaskDialog,
@@ -27,48 +32,36 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
     const [formData, setFormData] = useState<AddUpdateTaskFormData>({
         title: "",
         details: "",
-        category: {
-            value: "0",
-            label: "All"
-        }
+        category: categoryOptionAll
     })
-    const [selectCategories, setSelectCategories] = useState<{ value: string; label: string; }[]>([{
-        value: "0",
-        label: "All"
-    }])
+    const [categoryOptions, setCategoryOptions] = useState<{ value: string; label: string; }[]>([categoryOptionAll])
 
     useEffect(() => {
-        if (selectCategories.length === 1 && categories.length !== 0) {
-            let categoriesPrep = categories.map(category => ({
-                value: category.id,
-                label: category.title
-            }))
+        let categoriesPrep = categories.map(category => ({
+            value: category.id,
+            label: category.title
+        }))
 
-            setSelectCategories(old => [...old, ...categoriesPrep])
-        }
-    }, [selectCategories, setSelectCategories, categories])
+        setCategoryOptions([categoryOptionAll, ...categoriesPrep])
+    }, [categories])
 
     useEffect(() => {
         if (isOpenAddUpdateTaskDialog) {
             setFormData(() => {
-                let selectedCategory;
-                console.log(task)
+                let selectedCategoryOption;
                 if (task !== undefined && !isBlank(task.categoryId)) {
-                    selectedCategory = categories.find(option => option.id === task.categoryId)
+                    selectedCategoryOption = categoryOptions.find(category => category.value === task.categoryId)
                 } else {
-                    selectedCategory = categories.find(option => option.id === selectedCategoryId)
+                    selectedCategoryOption = categoryOptions.find(category => category.value === selectedCategoryId)
                 }
                 return {
                     title: task === undefined ? "" : task.title,
                     details: task === undefined ? "" : task.details,
-                    category: {
-                        value: selectedCategory === undefined ? "0" : selectedCategory.id,
-                        label: selectedCategory === undefined ? "All" : selectedCategory.title
-                    }
+                    category: selectedCategoryOption === undefined ? categoryOptionAll : selectedCategoryOption
                 }
             })
         }
-    }, [isOpenAddUpdateTaskDialog, task, categories, selectedCategoryId])
+    }, [isOpenAddUpdateTaskDialog, task, categoryOptions, selectedCategoryId])
 
     const handleForm = (e: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget;
@@ -114,10 +107,7 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
         setFormData({
             title: "",
             details: "",
-            category: {
-                value: "0",
-                label: "All"
-            }
+            category: categoryOptionAll
         })
         cancelAddUpdateTaskDialog()
     };
@@ -137,7 +127,7 @@ const AddUpdateTaskDialog: React.FC<Props> = ({
             overlayClassName="AddUpdateTaskDialog-overlay">
             <form className='AddUpdateTaskDialog-form' onSubmit={handleSubmit}>
                 <div>
-                    <Select options={selectCategories} defaultValue={formData.category}
+                    <Select options={categoryOptions} defaultValue={formData.category}
                         onChange={handleSelectChange} name="category" />
                     <div className='AddUpdateTaskDialog-column '>
                         <label htmlFor='title'>Title:</label>
