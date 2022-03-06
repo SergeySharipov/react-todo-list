@@ -6,10 +6,6 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.4.0",
-    "@types/node": "^17.0.18",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-modal": "^3.14.4",
@@ -46,6 +42,10 @@
   },
   "devDependencies": {
     "@types/react-modal": "^3.13.1",
-    "@types/uniqid": "^5.3.2"
+    "@types/uniqid": "^5.3.2",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.18",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11"
   }
 }
